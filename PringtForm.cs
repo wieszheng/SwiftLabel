@@ -260,5 +260,20 @@ namespace SwiftLabel
                 MessageBox.Show("读取配置文件失败：" + ex.Message, "错误");
             }
         }
+
+        private void passWrod_KeyPress(object sender, KeyPressEventArgs e)
+        {
+            if (passWrod.Text != "2024")
+            {
+                return;
+            }
+            dataName.Enabled = true;
+            checkVerify.Enabled = true;
+            inputStart.Enabled = true;
+            inputContinuous.Enabled = true;
+            inputText.Enabled = true;
+            inputNum.Enabled = true;
+            saveConfig.Enabled = true;
+        }
     }
 }

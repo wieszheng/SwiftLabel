@@ -77,6 +77,7 @@
             this.tabs1.Name = "tabs1";
             this.tabs1.Pages.Add(this.tabPage1);
             this.tabs1.Pages.Add(this.tabPage2);
+            this.tabs1.SelectedIndex = 1;
             this.tabs1.Size = new System.Drawing.Size(748, 511);
             this.tabs1.Style = styleLine1;
             this.tabs1.TabIndex = 0;
@@ -90,7 +91,7 @@
             this.tabPage1.Controls.Add(this.pictureBox);
             this.tabPage1.Controls.Add(this.frontData);
             this.tabPage1.Controls.Add(this.pringData);
-            this.tabPage1.Location = new System.Drawing.Point(3, 32);
+            this.tabPage1.Location = new System.Drawing.Point(-742, -476);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(742, 476);
             this.tabPage1.TabIndex = 0;
@@ -154,7 +155,7 @@
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage2.Controls.Add(this.gridPanel3);
-            this.tabPage2.Location = new System.Drawing.Point(-742, -476);
+            this.tabPage2.Location = new System.Drawing.Point(3, 32);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(742, 476);
             this.tabPage2.TabIndex = 1;
@@ -194,6 +195,7 @@
             // 
             // saveConfig
             // 
+            this.saveConfig.Enabled = false;
             this.saveConfig.Location = new System.Drawing.Point(374, 395);
             this.saveConfig.Name = "saveConfig";
             this.saveConfig.Size = new System.Drawing.Size(365, 43);
@@ -209,9 +211,11 @@
             this.passWrod.Size = new System.Drawing.Size(365, 43);
             this.passWrod.TabIndex = 35;
             this.passWrod.Text = "密码";
+            this.passWrod.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.passWrod_KeyPress);
             // 
             // inputNum
             // 
+            this.inputNum.Enabled = false;
             this.inputNum.Location = new System.Drawing.Point(114, 346);
             this.inputNum.Name = "inputNum";
             this.inputNum.Size = new System.Drawing.Size(625, 43);
@@ -228,6 +232,7 @@
             // 
             // inputText
             // 
+            this.inputText.Enabled = false;
             this.inputText.Location = new System.Drawing.Point(114, 297);
             this.inputText.Name = "inputText";
             this.inputText.Size = new System.Drawing.Size(625, 43);
@@ -244,6 +249,7 @@
             // 
             // inputContinuous
             // 
+            this.inputContinuous.Enabled = false;
             this.inputContinuous.Location = new System.Drawing.Point(114, 248);
             this.inputContinuous.Name = "inputContinuous";
             this.inputContinuous.Size = new System.Drawing.Size(625, 43);
@@ -260,6 +266,7 @@
             // 
             // inputStart
             // 
+            this.inputStart.Enabled = false;
             this.inputStart.Location = new System.Drawing.Point(114, 199);
             this.inputStart.Name = "inputStart";
             this.inputStart.Size = new System.Drawing.Size(625, 43);
@@ -284,6 +291,7 @@
             // 
             // checkVerify
             // 
+            this.checkVerify.Enabled = false;
             this.checkVerify.Location = new System.Drawing.Point(3, 150);
             this.checkVerify.Name = "checkVerify";
             this.checkVerify.Size = new System.Drawing.Size(365, 43);
@@ -292,6 +300,7 @@
             // 
             // dataName
             // 
+            this.dataName.Enabled = false;
             this.dataName.Location = new System.Drawing.Point(114, 101);
             this.dataName.Name = "dataName";
             this.dataName.Size = new System.Drawing.Size(625, 43);
