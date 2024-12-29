@@ -200,6 +200,8 @@ namespace SwiftLabel
             //if (printer_comboBox.SelectedItem != null)
             //    format.PrintSetup.PrinterName = printer_comboBox.SelectedItem.ToString();
             format.Print("BarPrint" + DateTime.Now, 1);
+
+            pringData.Clear();
         }
 
 
