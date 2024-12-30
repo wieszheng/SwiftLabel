@@ -17,9 +17,8 @@ namespace SwiftLabel
     public partial class PrintForm : Form
     {
         private Engine engine = null; // The BarTender Print Engine
-        private LabelFormatDocument format = null; // The currently open Format
-        private List<string> listCodes;
-        private string previewPath = ""; // The path to the folder where the previews will be exported.
+        private LabelFormatDocument format = null;
+        private string previewPath = ""; 
         private string _btw_path = "";
         private string _configPath;  // 移除初始值
         private IniFile _iniFile;
@@ -41,34 +40,20 @@ namespace SwiftLabel
             }
             catch (PrintEngineException exception)
             {
-                // If the engine is unable to start, a PrintEngineException will be thrown.
                 MessageBox.Show(this, exception.Message, Application.ProductName);
-                //this.Close(); // Close this app. We cannot run without connection to an engine.
                 return;
             }
 
             _iniFile = new IniFile(_configPath);  // 使用完整路径
             LoadConfig();
 
-            listCodes = new List<string>();
-            
-            _btw_path = Application.StartupPath + "\\" + "test.btw";
-            if (File.Exists(_btw_path))
-            {
-                fileNametBox.Text = "test.btw";
-                format = engine.Documents.Open(_btw_path);
-
-            }
             //创建临时文件夹
-            // Create a temporary folder to hold the images.
-            string tempPath = Path.GetTempPath(); // Something like "C:\Documents and Settings\<username>\Local Settings\Temp\"
+            string tempPath = Path.GetTempPath(); 
             string newFolder;
-
-            // It's not likely we'll have a path that already exists, but we'll check for it anyway.
             do
             {
                 newFolder = Path.GetRandomFileName();
-                previewPath = tempPath + newFolder; // newFolder is something crazy like "gulvwdmt.3r4"
+                previewPath = tempPath + newFolder;
             } while (Directory.Exists(previewPath));
             Directory.CreateDirectory(previewPath);
         }
@@ -136,8 +121,6 @@ namespace SwiftLabel
         private void PrintForm_FormClosed(object sender, FormClosedEventArgs e)
         {
             engine?.Stop(SaveOptions.DoNotSaveChanges);
-
-            // Remove the temporary path and all the images.
             if (previewPath.Length != 0)
                 Directory.Delete(previewPath, true);
         }
@@ -159,7 +142,8 @@ namespace SwiftLabel
                 _iniFile.WriteValue("Settings", "TotalLength", inputNum.Text);
                 _iniFile.WriteValue("Settings", "VerifyText", inputText.Text);
                 _iniFile.WriteValue("Settings", "VerifyEnabled", checkVerify.Checked.ToString());
-
+                _iniFile.WriteValue("Settings", "AutoPrintEnabled", checkAutoPrint.Checked.ToString());
+                _iniFile.WriteValue("Settings", "fileNamePath", _btw_path);
                 MessageBox.Show(this, "配置保存成功", Application.ProductName);
             }
             catch (Exception ex)
@@ -211,18 +195,22 @@ namespace SwiftLabel
 
                 if (checkVerify.Checked)
                 {
-                    string substring = pringData.Text.Substring(Convert.ToInt32(inputStart.Text) -1, Convert.ToInt32(inputContinuous.Text));
+                    if (inputStart.Text != "" && inputContinuous.Text != "" && inputText.Text != "")
+                    {
+                        string substring = pringData.Text.Substring(Convert.ToInt32(inputStart.Text) - 1, Convert.ToInt32(inputContinuous.Text));
 
-                    if (pringData.Text.Length <= Convert.ToInt32(inputContinuous.Text) + Convert.ToInt32(inputStart.Text))
-                    {
-                        MessageBox.Show(this, "数据设置长度错误，请确认\n" + pringData.Text.Length, Application.ProductName);
-                        return;
+                        if (pringData.Text.Length <= Convert.ToInt32(inputContinuous.Text) + Convert.ToInt32(inputStart.Text))
+                        {
+                            MessageBox.Show(this, "数据设置长度错误，请确认\n" + pringData.Text.Length, Application.ProductName);
+                            return;
+                        }
+                        if (substring != inputText.Text)
+                        {
+                            MessageBox.Show(this, "数据取值内容错误，请确认\n" + substring, Application.ProductName);
+                            return;
+                        }
                     }
-                    if (substring != inputText.Text)
-                    {
-                        MessageBox.Show(this, "数据取值内容错误，请确认\n" + substring, Application.ProductName);
-                        return;
-                    }
+
                     if (pringData.Text.Length != Convert.ToInt32(inputNum.Text))
                     {
                         MessageBox.Show(this, "数据取值长度错误，请确认\n" + pringData.Text.Length, Application.ProductName);
@@ -254,6 +242,21 @@ namespace SwiftLabel
                 inputText.Text = _iniFile.ReadValue("Settings", "VerifyText", "");
                 string verifyEnabled = _iniFile.ReadValue("Settings", "VerifyEnabled", "False");
                 checkVerify.Checked = bool.Parse(verifyEnabled);
+                string AutoPrintEnabled = _iniFile.ReadValue("Settings", "AutoPrintEnabled", "False");
+                checkAutoPrint.Checked = bool.Parse(AutoPrintEnabled);
+                
+                // 读取并验证btw文件路径
+                string filePath = _iniFile.ReadValue("Settings", "fileNamePath", "");
+                if (!string.IsNullOrEmpty(filePath) && 
+                    File.Exists(filePath) && 
+                    Path.GetExtension(filePath).ToLower() == ".btw")
+                {
+                    _btw_path = filePath;
+                    fileNametBox.Text = Path.GetFileName(filePath);
+                    fileNametBox.BackColor = Color.LightGreen;
+                    format = engine.Documents.Open(_btw_path);
+                    
+                }
             }
             catch (Exception ex)
             {
@@ -267,8 +270,10 @@ namespace SwiftLabel
             {
                 return;
             }
+            btnFileOpen.Enabled = true;
             dataName.Enabled = true;
             checkVerify.Enabled = true;
+            checkAutoPrint.Enabled = true;
             inputStart.Enabled = true;
             inputContinuous.Enabled = true;
             inputText.Enabled = true;

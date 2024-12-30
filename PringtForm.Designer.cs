@@ -77,7 +77,6 @@
             this.tabs1.Name = "tabs1";
             this.tabs1.Pages.Add(this.tabPage1);
             this.tabs1.Pages.Add(this.tabPage2);
-            this.tabs1.SelectedIndex = 1;
             this.tabs1.Size = new System.Drawing.Size(748, 511);
             this.tabs1.Style = styleLine1;
             this.tabs1.TabIndex = 0;
@@ -91,7 +90,7 @@
             this.tabPage1.Controls.Add(this.pictureBox);
             this.tabPage1.Controls.Add(this.frontData);
             this.tabPage1.Controls.Add(this.pringData);
-            this.tabPage1.Location = new System.Drawing.Point(-742, -476);
+            this.tabPage1.Location = new System.Drawing.Point(3, 32);
             this.tabPage1.Name = "tabPage1";
             this.tabPage1.Size = new System.Drawing.Size(742, 476);
             this.tabPage1.TabIndex = 0;
@@ -155,7 +154,7 @@
             // 
             this.tabPage2.BackColor = System.Drawing.SystemColors.Control;
             this.tabPage2.Controls.Add(this.gridPanel3);
-            this.tabPage2.Location = new System.Drawing.Point(3, 32);
+            this.tabPage2.Location = new System.Drawing.Point(-742, -476);
             this.tabPage2.Name = "tabPage2";
             this.tabPage2.Size = new System.Drawing.Size(742, 476);
             this.tabPage2.TabIndex = 1;
@@ -210,7 +209,7 @@
             this.passWrod.PasswordChar = '*';
             this.passWrod.Size = new System.Drawing.Size(365, 43);
             this.passWrod.TabIndex = 35;
-            this.passWrod.Text = "密码";
+            this.passWrod.Text = "123456789";
             this.passWrod.KeyPress += new System.Windows.Forms.KeyPressEventHandler(this.passWrod_KeyPress);
             // 
             // inputNum
@@ -283,6 +282,7 @@
             // 
             // checkAutoPrint
             // 
+            this.checkAutoPrint.Enabled = false;
             this.checkAutoPrint.Location = new System.Drawing.Point(374, 150);
             this.checkAutoPrint.Name = "checkAutoPrint";
             this.checkAutoPrint.Size = new System.Drawing.Size(365, 43);
@@ -317,6 +317,7 @@
             // 
             // btnFileOpen
             // 
+            this.btnFileOpen.Enabled = false;
             this.btnFileOpen.Location = new System.Drawing.Point(596, 52);
             this.btnFileOpen.Name = "btnFileOpen";
             this.btnFileOpen.Size = new System.Drawing.Size(142, 43);
