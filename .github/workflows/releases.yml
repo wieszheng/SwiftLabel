@@ -16,7 +16,7 @@ jobs:
     - name: Setup .NET
       uses: actions/setup-dotnet@v1
       with:
-        dotnet-version: 4.8.1  # 指定 .NET 版本
+        dotnet-version: '4.8.1'  # 指定 .NET 版本
 
     - name: Restore dependencies
       run: dotnet restore
@@ -25,7 +25,7 @@ jobs:
       run: dotnet build --configuration Release
 
     - name: Publish
-      run: dotnet publish --configuration Release --output dist
+      run: dotnet publish --configuration Release -r win-x64 --output dist
  
     - name: Create archive
       run: |
