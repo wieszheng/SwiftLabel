@@ -1,30 +1,33 @@
-name: .NET WinForms CI
+ï»¿name: .NET WinForms CI ğŸ§ª
 
 on:
   push:
     branches:
-      - master   # ´¥·¢¹¹½¨µÄ·ÖÖ§
+      - master   # è§¦å‘æ„å»ºçš„åˆ†æ”¯
+
+env:
+  DOTNET_VERSION: '4.8.x'
 
 jobs:
   build:
-    runs-on: windows-latest  # Ê¹ÓÃ Windows »·¾³
+    runs-on: windows-latest  # ä½¿ç”¨ Windows ç¯å¢ƒ
 
     steps:
     - name: Checkout code
-      uses: actions/checkout@v2
+      uses: actions/checkout@v3
 
-    - name: Setup .NET
-      uses: actions/setup-dotnet@v1
+    - name: Setup .NET ğŸ“¦
+      uses: actions/setup-dotnet@v3
       with:
-        dotnet-version: '4.8.1'  # Ö¸¶¨ .NET °æ±¾
+        dotnet-version: ${{ env.DOTNET_VERSION }}
 
-    - name: Restore dependencies
+    - name: Restore dependencies ğŸ“‚
       run: dotnet restore
 
-    - name: Build
+    - name: Build ğŸ§±
       run: dotnet build --configuration Release
 
-    - name: Publish
+    - name: Publish ğŸ§ª
       run: dotnet publish --configuration Release -r win-x64 --output dist
  
     - name: Create archive
