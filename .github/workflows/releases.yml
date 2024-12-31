@@ -1,0 +1,39 @@
+name: .NET WinForms CI
+
+on:
+  push:
+    branches:
+      - master   # 触发构建的分支
+
+jobs:
+  build:
+    runs-on: windows-latest  # 使用 Windows 环境
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Setup .NET
+      uses: actions/setup-dotnet@v1
+      with:
+        dotnet-version: 4.8.1  # 指定 .NET 版本
+
+    - name: Restore dependencies
+      run: dotnet restore
+
+    - name: Build
+      run: dotnet build --configuration Release
+
+    - name: Publish
+      run: dotnet publish --configuration Release --output dist
+ 
+    - name: Create archive
+      run: |
+        cd dist
+        tar -zcvf publish.tar.gz *
+        cd ..
+    - name: Upload artifact
+      uses: actions/upload-artifact@v2
+      with:
+        name: publish
+        path: dist/publish.tar.gz

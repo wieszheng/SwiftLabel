@@ -72,7 +72,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.tabs1.BackColor = System.Drawing.SystemColors.Control;
-            this.tabs1.Cursor = System.Windows.Forms.Cursors.Hand;
+            this.tabs1.Cursor = System.Windows.Forms.Cursors.Default;
             this.tabs1.Location = new System.Drawing.Point(12, 12);
             this.tabs1.Name = "tabs1";
             this.tabs1.Pages.Add(this.tabPage1);

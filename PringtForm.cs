@@ -199,7 +199,7 @@ namespace SwiftLabel
                     {
                         string substring = pringData.Text.Substring(Convert.ToInt32(inputStart.Text) - 1, Convert.ToInt32(inputContinuous.Text));
 
-                        if (pringData.Text.Length <= Convert.ToInt32(inputContinuous.Text) + Convert.ToInt32(inputStart.Text))
+                        if (pringData.Text.Length < Convert.ToInt32(inputContinuous.Text) + Convert.ToInt32(inputStart.Text))
                         {
                             MessageBox.Show(this, "数据设置长度错误，请确认\n" + pringData.Text.Length, Application.ProductName);
                             return;
