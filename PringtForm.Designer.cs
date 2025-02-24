@@ -127,10 +127,10 @@
             // 
             // pictureBox
             // 
-            this.pictureBox.Location = new System.Drawing.Point(231, 161);
+            this.pictureBox.Location = new System.Drawing.Point(12, 161);
             this.pictureBox.Name = "pictureBox";
-            this.pictureBox.Size = new System.Drawing.Size(300, 300);
-            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.CenterImage;
+            this.pictureBox.Size = new System.Drawing.Size(720, 300);
+            this.pictureBox.SizeMode = System.Windows.Forms.PictureBoxSizeMode.AutoSize;
             this.pictureBox.TabIndex = 10;
             this.pictureBox.TabStop = false;
             // 
@@ -367,11 +367,12 @@
             this.Margin = new System.Windows.Forms.Padding(6, 5, 6, 5);
             this.MinimumSize = new System.Drawing.Size(785, 574);
             this.Name = "PrintForm";
-            this.Text = "SwiftLabel v1.0";
+            this.Text = "Label v1.1";
             this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.PrintForm_FormClosed);
             this.Load += new System.EventHandler(this.PrintForm_Load);
             this.tabs1.ResumeLayout(false);
             this.tabPage1.ResumeLayout(false);
+            this.tabPage1.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.pictureBox)).EndInit();
             this.tabPage2.ResumeLayout(false);
             this.gridPanel3.ResumeLayout(false);

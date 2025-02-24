@@ -18,14 +18,14 @@ namespace SwiftLabel
     {
         private Engine engine = null; // The BarTender Print Engine
         private LabelFormatDocument format = null;
-        private string previewPath = ""; 
+        private string previewPath = "";
         private string _btw_path = "";
         private string _configPath;  // 移除初始值
         private IniFile _iniFile;
-   
+
         private Messages messages;
-        
-        public PrintForm()  
+
+        public PrintForm()
         {
             InitializeComponent();
             // 在构造函数中设置配置文件路径
@@ -48,7 +48,7 @@ namespace SwiftLabel
             LoadConfig();
 
             //创建临时文件夹
-            string tempPath = Path.GetTempPath(); 
+            string tempPath = Path.GetTempPath();
             string newFolder;
             do
             {
@@ -155,6 +155,8 @@ namespace SwiftLabel
 
         void PrintBar(bool isPreView = false)
         {
+            engine = new Engine(true);
+            format = engine.Documents.Open(_btw_path);
             try
             {
                 format.SubStrings.SetSubString(dataName.Text, pringData.Text);
@@ -166,7 +168,7 @@ namespace SwiftLabel
             }
             if (format != null)
             {
-                format.ExportImageToFile(previewPath + @"\exp.bmp", ImageType.BMP, Seagull.BarTender.Print.ColorDepth.ColorDepth256, new Resolution(350, 165
+                format.ExportImageToFile(previewPath + @"\exp.bmp", ImageType.BMP, Seagull.BarTender.Print.ColorDepth.ColorDepth256, new Resolution(700, 300
                     ), OverwriteOptions.Overwrite);
 
                 Image image = Image.FromFile(previewPath + @"\exp.bmp");
@@ -186,12 +188,14 @@ namespace SwiftLabel
             format.Print("BarPrint" + DateTime.Now, 1);
 
             pringData.Clear();
+            engine.Stop();
         }
 
 
         private void pringData_KeyDown(object sender, KeyEventArgs e)
         {
-            if (e.KeyCode == Keys.Enter && checkAutoPrint.Checked) {
+            if (e.KeyCode == Keys.Enter && checkAutoPrint.Checked)
+            {
 
                 if (checkVerify.Checked)
                 {
@@ -223,9 +227,9 @@ namespace SwiftLabel
                 {
                     PrintBar();
                 }
-                
+
             }
-            
+
         }
 
         // 添加读取配置方法
@@ -244,18 +248,18 @@ namespace SwiftLabel
                 checkVerify.Checked = bool.Parse(verifyEnabled);
                 string AutoPrintEnabled = _iniFile.ReadValue("Settings", "AutoPrintEnabled", "False");
                 checkAutoPrint.Checked = bool.Parse(AutoPrintEnabled);
-                
+
                 // 读取并验证btw文件路径
                 string filePath = _iniFile.ReadValue("Settings", "fileNamePath", "");
-                if (!string.IsNullOrEmpty(filePath) && 
-                    File.Exists(filePath) && 
+                if (!string.IsNullOrEmpty(filePath) &&
+                    File.Exists(filePath) &&
                     Path.GetExtension(filePath).ToLower() == ".btw")
                 {
                     _btw_path = filePath;
                     fileNametBox.Text = Path.GetFileName(filePath);
                     fileNametBox.BackColor = Color.LightGreen;
                     format = engine.Documents.Open(_btw_path);
-                    
+
                 }
             }
             catch (Exception ex)
